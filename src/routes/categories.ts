@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { authenticateAdmin } from "../middleware/auth.js";
+import { authenticateAdmin, authorizeAdmin } from "../middleware/auth.js";
 import { CategoryController } from "../controllers/categoryController.js";
 
 export const categoriesRouter: Router = express.Router();
@@ -8,6 +8,6 @@ export const categoriesRouter: Router = express.Router();
 categoriesRouter.get("/", CategoryController.getAll);
 
 // Admin category routes
-categoriesRouter.post("/", authenticateAdmin, CategoryController.create);
-categoriesRouter.put("/:id", authenticateAdmin, CategoryController.update);
-categoriesRouter.delete("/:id", authenticateAdmin, CategoryController.delete);
+categoriesRouter.post("/", authenticateAdmin, authorizeAdmin, CategoryController.create);
+categoriesRouter.put("/:id", authenticateAdmin, authorizeAdmin, CategoryController.update);
+categoriesRouter.delete("/:id", authenticateAdmin, authorizeAdmin, CategoryController.delete);
