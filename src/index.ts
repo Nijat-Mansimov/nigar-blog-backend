@@ -6,6 +6,7 @@ import { articlesRouter } from "./routes/articles.js";
 import { adminRouter } from "./routes/admin.js";
 import { categoriesRouter } from "./routes/categories.js";
 import { settingsRouter } from "./routes/settings.js";
+import { seminarsRouter } from "./routes/seminars.js";
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/articles", articlesRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/categories", categoriesRouter);
 app.use("/api/settings", settingsRouter);
+app.use("/api/seminars", seminarsRouter);
 
 // Error handling
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
