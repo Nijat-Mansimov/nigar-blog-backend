@@ -203,8 +203,76 @@ const SettingsSchema = new Schema<ISettings>(
   { timestamps: true }
 );
 
+// Seminar Schema
+export interface ISeminarTranslation {
+  title: string;
+  description: string;
+}
+
+export interface ISeminar extends Document {
+  slug: string;
+  translations: {
+    en: ISeminarTranslation;
+    az: ISeminarTranslation;
+    ru: ISeminarTranslation;
+    tr: ISeminarTranslation;
+  };
+  topic: string;
+  startDateTime: Date;
+  endDateTime: Date;
+  format: "online" | "offline" | "hybrid";
+  location?: string;
+  platformLink?: string;
+  registrationLink?: string;
+  coverImage?: string;
+  views: number;
+  status: "upcoming" | "completed";
+  published: boolean;
+  defaultLanguage: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const SeminarSchema = new Schema<ISeminar>(
+  {
+    slug: { type: String, required: true, unique: true },
+    translations: {
+      en: {
+        title: String,
+        description: String,
+      },
+      az: {
+        title: String,
+        description: String,
+      },
+      ru: {
+        title: String,
+        description: String,
+      },
+      tr: {
+        title: String,
+        description: String,
+      },
+    },
+    topic: { type: String, required: true },
+    startDateTime: { type: Date, required: true },
+    endDateTime: { type: Date, required: true },
+    format: { type: String, enum: ["online", "offline", "hybrid"], required: true },
+    location: String,
+    platformLink: String,
+    registrationLink: String,
+    coverImage: String,
+    views: { type: Number, default: 0 },
+    status: { type: String, enum: ["upcoming", "completed"], default: "upcoming" },
+    published: { type: Boolean, default: false },
+    defaultLanguage: { type: String, default: "az" },
+  },
+  { timestamps: true }
+);
+
 export const Article = mongoose.model<IArticle>("Article", ArticleSchema);
 export const Category = mongoose.model<ICategory>("Category", CategorySchema);
 export const ViewRecord = mongoose.model<IViewRecord>("ViewRecord", ViewRecordSchema);
 export const User = mongoose.model<IUser>("User", UserSchema);
 export const Settings = mongoose.model<ISettings>("Settings", SettingsSchema);
+export const Seminar = mongoose.model<ISeminar>("Seminar", SeminarSchema);
